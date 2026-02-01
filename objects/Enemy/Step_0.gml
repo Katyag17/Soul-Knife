@@ -10,7 +10,14 @@ if(isPlayer)
 	var movement_friction = 0.25;
 	var movement_x = key_right - key_left;
 	var movement_y = key_down - key_up;
-
+	
+	// this is for fixing vectoring issue
+	var input_total = point_distance(0, 0, movement_x, movement_y);
+	if (input_total > 0) {
+		movement_x /= input_total;
+		movement_y /= input_total;
+	}
+	
 	if (movement_x != 0) {
 		hsp += movement_x * movement_acceleration;
 		hsp = clamp(hsp, -maximum_speed, maximum_speed);
