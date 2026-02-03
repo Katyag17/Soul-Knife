@@ -12,34 +12,32 @@ var movement_friction = 0.25;
 var movement_x = key_right - key_left;
 var movement_y = key_down - key_up;
 
+// this is for fixing vectoring issue
+var input_total = point_distance(0, 0, movement_x, movement_y);
+if (input_total > 0) {
+    movement_x /= input_total;
+    movement_y /= input_total;
+}
+
 if (movement_x != 0) {
-	hsp += movement_x * movement_acceleration;
-	hsp = clamp(hsp, -maximum_speed, maximum_speed);
+    hsp += movement_x * movement_acceleration;
+    hsp = clamp(hsp, -maximum_speed, maximum_speed);
 } else {
-	if (abs(hsp) <= movement_friction) {
-		hsp = 0;
-	} else {
-		hsp -= sign(hsp) * movement_friction;
-	}
+    if (abs(hsp) <= movement_friction) {
+        hsp = 0;
+    } else {
+        hsp -= sign(hsp) * movement_friction;
+    }
 }
 if (movement_y != 0) {
-	vsp += movement_y * movement_acceleration;
-	vsp = clamp(vsp, -maximum_speed, maximum_speed);
+    vsp += movement_y * movement_acceleration;
+    vsp = clamp(vsp, -maximum_speed, maximum_speed);
 } else {
-	if (abs(vsp) <= movement_friction) {
-		vsp = 0;
-	} else {
-		vsp -= sign(vsp) * movement_friction;
-	}
+    if (abs(vsp) <= movement_friction) {
+        vsp = 0;
+    } else {
+        vsp -= sign(vsp) * movement_friction;
+    }
 }
-
-// Vectoring Fix
-total_speed = sqrt(hsp*hsp + vsp*vsp);
-if (total_speed > maximum_speed) {
-    spd_scale = maximum_speed/total_speed;
-    hsp = clamp(hsp*spd_scale, -maximum_speed, maximum_speed);
-    vsp = clamp(vsp*spd_scale, -maximum_speed, maximum_speed)   ;
-}
-
 hspeed = hsp;
 vspeed = vsp;
