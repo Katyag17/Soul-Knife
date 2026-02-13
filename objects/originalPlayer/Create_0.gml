@@ -1,5 +1,5 @@
 /// @description Establish key vars
-global.currentPlayer = object_index
+global.currentPlayer = id
 isPlayer = true
 
 hsp = 0;
